@@ -3,15 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Omniyat · Digital Transformation (Interactive)</title>
+  <title>Omniyat · Digital Transformation (Interactive Mindmap)</title>
   <style>
+    :root { --page-pad: 16px; }
     html, body { height: 100%; margin: 0; }
-    #mindmap { position: absolute; inset: 0; }
-    .mm-toolbar { position: fixed; top: 10px; right: 12px; z-index: 9; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: var(--page-pad); }
+    /* Key: give the code block a definite height so Markmap can size the SVG */
+    pre.markmap-src { 
+      min-height: 100vh; 
+      margin: 0; 
+      background: #fff; 
+      border-radius: 12px; 
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+      overflow: auto;
+    }
+    /* Hide raw markdown after Markmap renders */
+    .mm-rendered pre.markmap-src { display: none; }
   </style>
 </head>
 <body>
-  <div id="mindmap" class="markmap">
+  <div class="wrap">
+    <h1>Omniyat · Digital Transformation — Interactive (Collapsible)</h1>
+
+    <!-- Markmap Autoloader expects <pre><code class="language-markdown"> ... -->
+    <pre class="markmap-src"><code class="language-markdown">
 # Omniyat · Digital Transformation (Big Picture)
 ## Outcomes
 - Lead→Deal↑
@@ -51,13 +67,19 @@
 - Nintex & DocuSign
 - Lakehouse & Power BI
 - Entra ID & Sentinel
+    </code></pre>
+    <noscript>Enable JavaScript to view the interactive mindmap.</noscript>
   </div>
 
-  <!-- Autoloader pulls required assets from CDN -->
+  <!-- Markmap Autoloader via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.17.2"></script>
   <script>
-    window.markmap = window.markmap || {};
-    window.markmap.autoLoader.renderAll();
+    // Render after DOM is ready; add a class to hide the markdown
+    window.addEventListener('DOMContentLoaded', () => {
+      window.markmap = window.markmap || {};
+      window.markmap.autoLoader.renderAll();
+      document.body.classList.add('mm-rendered');
+    });
   </script>
 </body>
 </html>
