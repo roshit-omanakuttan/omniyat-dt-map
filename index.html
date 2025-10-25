@@ -5,23 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Omniyat · Digital Transformation (Interactive Mindmap)</title>
   <style>
-    html, body { height: 100%; margin: 0; }
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    header { padding: 16px 20px; font-weight: 600; }
-    #mindmap {
-      display: block;
-      width: 100%;
-      height: calc(100vh - 64px); /* header height */
-    }
+    html,body{height:100%;margin:0} body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial}
+    header{padding:16px 20px;font-weight:600}
+    #mindmap{display:block;width:100%;height:calc(100vh - 64px)}
   </style>
 </head>
 <body>
   <header>Omniyat · Digital Transformation — Interactive (Collapsible)</header>
-
-  <!-- The SVG container Markmap will render into -->
   <svg id="mindmap"></svg>
 
-  <!-- Markdown source (kept out of layout) -->
+  <!-- Markdown source -->
   <script type="text/markdown" id="source">
 # Omniyat · Digital Transformation (Big Picture)
 ## Outcomes
@@ -64,27 +57,19 @@
 - Entra ID & Sentinel
   </script>
 
-  <!-- ESM modules: transformer + view -->
+  <!-- Correct ESM bundles -->
   <script type="module">
-    import { Transformer } from 'https://cdn.jsdelivr.net/npm/markmap-lib@0.15.7/dist/index.esm.min.js';
-    import { Markmap } from 'https://cdn.jsdelivr.net/npm/markmap-view@0.15.7/dist/index.esm.min.js';
+    import { Transformer } from 'https://cdn.jsdelivr.net/npm/markmap-lib@0.15.7/dist/index.esm.js';
+    import { Markmap }     from 'https://cdn.jsdelivr.net/npm/markmap-view@0.15.7/dist/index.esm.js';
 
-    // 1) Get markdown
     const md = document.getElementById('source').textContent.trim();
-
-    // 2) Transform to Markmap data
     const transformer = new Transformer();
     const { root } = transformer.transform(md);
 
-    // 3) Create the mindmap in the SVG container
     const mm = Markmap.create('#mindmap', { fitRatio: 0.9 });
-
-    // 4) Set data and fit to viewport
     mm.setData(root);
     mm.fit();
-
-    // (Optional) re-fit on resize
-    window.addEventListener('resize', () => mm.fit());
+    addEventListener('resize', () => mm.fit());
   </script>
 </body>
 </html>
